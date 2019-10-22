@@ -118,55 +118,21 @@ list<veiculo> concessionaria::getProducao_trimestre()
 }
 
 //Veículo já consta no estoque?
-bool concessionaria::checkEstoque(veiculo v)
+template <typename T, typename U>
+bool concessionaria::checkEstoque(T begin, T end, U element)
 {
     //Acesso ao estoque de veículos
-    for(list<veiculo>::iterator i = estoque.begin() ; i != estoque.end() ; i++)
+    while(begin != end)
     {
         //Lógica operacional para a aferição de igualdade
-        if((*i) == v)
+        if((*begin) == element)
         {
             cout << endl << "ERROR! Veículo já adicionado" << endl;
-            (*i).total--;
+            (*begin).total--;
             //Sai da iteração
             return true;
-        } 
-    }
-    return false;
-}
-
-//Veículo já consta no estoque de caminhões?
-bool concessionaria::checkEstoqueCaminhoes(caminhao v)
-{
-    //Acesso ao estoque de caminhões
-    for(list<caminhao>::iterator i = estoqueCaminhoes.begin() ; i != estoqueCaminhoes.end() ; i++)
-    {
-        //Lógica operacional para a aferição de igualdade
-        if((*i) == v)
-        {
-            cout << endl << "ERROR! Veículo já adicionado" << endl;
-            (*i).total--;
-            //Sai da iteração
-            return true;
-        } 
-    }
-    return false;
-}
-
-//Veículo já consta no estoque de motos?
-bool concessionaria::checkEstoqueMotos(moto v)
-{
-    //Acesso ao estoque de motos
-    for(list<moto>::iterator i = estoqueMotos.begin() ; i != estoqueMotos.end() ; i++)
-    {
-        //Lógica operacional para a aferição de igualdade
-        if((*i) == v)
-        {
-            cout << endl << "ERROR! Veículo já adicionado" << endl;
-            (*i).total--;
-            //Sai da iteração
-            return true;
-        } 
+        }
+        ++begin;
     }
     return false;
 }
@@ -188,7 +154,7 @@ void concessionaria::add_veiculo()
         {//As chaves criam um bloco e um escopo, para poder criar as variáveis.
             caminhao novoCaminhao;
             cin >> novoCaminhao;
-            if(!checkEstoqueCaminhoes(novoCaminhao))
+            if(!checkEstoque(estoqueCaminhoes.begin(), estoqueCaminhoes.end(), novoCaminhao))
             {
                 estoque.push_back(novoCaminhao);
                 estoqueCaminhoes.push_back(novoCaminhao);
@@ -200,7 +166,7 @@ void concessionaria::add_veiculo()
         {
             moto novaMoto;
             cin >> novaMoto;
-            if(!checkEstoqueMotos(novaMoto))
+            if(!checkEstoque(estoqueMotos.begin(), estoqueMotos.end(), novaMoto))
             {
                 estoque.push_back(novaMoto);
                 estoqueMotos.push_back(novaMoto);

@@ -56,9 +56,8 @@ class concessionaria
         void setEstoqueMotos(list<moto> setEstoqueMotos);
         list<moto> getEstoqueMotos();
         list<veiculo> getProducao_trimestre();
-        bool checkEstoque(veiculo v);
-        bool checkEstoqueCaminhoes(caminhao v);
-        bool checkEstoqueMotos(moto v);
+        template <typename T, typename U>
+        bool checkEstoque(T begin, T end, U element);
         void add_veiculo();
         void increase_tax_rate(float n);
 
