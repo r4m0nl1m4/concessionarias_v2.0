@@ -18,7 +18,7 @@ CPPFLAGS = -O0       \
 #diretivas para o ligador (linker)
 LDFLAGS = -DIR
 #arquivos objetos definidos como pré-requisito
-OBJS = main.o concessionarias.o veiculos.o						
+OBJS = main.o concessionarias.o veiculos.o automoveis.o caminhoes.o motos.o					
 
 #regra de construção do executável
 $(PROG):$(OBJS)
@@ -31,8 +31,17 @@ main.o:
 concessionarias.o : concessionarias.h
 	$(CC) $(CPPFLAGS) -c concessionarias.cpp
 
-veiculos.o : veiculos.h
+veiculos.o : veiculos.h 
 	$(CC) $(CPPFLAGS) -c veiculos.cpp
+
+automoveis.o : automoveis.h
+	$(CC) $(CPPFLAGS) -c automoveis.cpp
+
+caminhoes.o : caminhoes.h
+	$(CC) $(CPPFLAGS) -c caminhoes.cpp
+
+motos.o : motos.h
+	$(CC) $(CPPFLAGS) -c motos.cpp
 
 #regra de limpeza dos arquivos
 clean:

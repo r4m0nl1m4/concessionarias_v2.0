@@ -7,6 +7,7 @@
 #define concessionarias_H
 
 //Bibliotecas
+#include <cstdlib>
 #include <ctime>
 #include <iostream>
 #include <list>
@@ -14,24 +15,31 @@
 
 //Bibliotecas novas
 #include "./veiculos.h"
+#include "./automoveis.h"
+#include "./caminhoes.h"
+#include "./motos.h"
 
 //Classe implícita
 using namespace std;
 
 class concessionaria
 {
-    private:
+    protected:
         //propriedades
         string nome, cnpj;
         list<veiculo> estoque;
+        list<caminhao> estoqueCaminhoes;
+        list<moto>     estoqueMotos;
         int naut;
     public:
         //contador objetos
         static int total;
+
         //Construtores
-        concessionaria(string nome, string cnpj, list<veiculo> estoque);
+        concessionaria(string _nome, string _cnpj, list<veiculo> _estoque, list<caminhao> _estoqueCaminhoes, list<moto> _estoqueMotos);
         concessionaria(string _nome, string _cnpj);
         concessionaria();
+
         //Destrutor
         ~concessionaria();
 
@@ -43,7 +51,14 @@ class concessionaria
         string getCNPJ();
         void setEstoque(list<veiculo> setEstoque);
         list<veiculo> getEstoque();
+        void setEstoqueCaminhoes(list<caminhao> setEstoqueCaminhoes);
+        list<caminhao> getEstoqueCaminhoes();
+        void setEstoqueMotos(list<moto> setEstoqueMotos);
+        list<moto> getEstoqueMotos();
         list<veiculo> getProducao_trimestre();
+        bool checkEstoque(veiculo v);
+        bool checkEstoqueCaminhoes(caminhao v);
+        bool checkEstoqueMotos(moto v);
         void add_veiculo();
         void increase_tax_rate(float n);
 

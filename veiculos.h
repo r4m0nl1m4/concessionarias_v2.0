@@ -17,7 +17,7 @@ using namespace std;
 
 class veiculo
 {
-    private:
+    protected:
         //propriedades
         string marca;
         float preco, chass;
@@ -27,8 +27,8 @@ class veiculo
         static int total;
 
         //Construtores
-        veiculo(string marca, float preco, float chass, time_t dataF);
-        veiculo(string marca, float preco, float chass);
+        veiculo(string _marca, float _preco, float _chass, time_t _dataF);
+        veiculo(string _marca, float _preco, float _chass);
         veiculo();
 
         //Destrutor
@@ -44,17 +44,18 @@ class veiculo
         float getChass();
         void setDataF(time_t setDataF);
         time_t getDataF();
+        virtual void showDados();
 
         //Sobrecarga de Operadores Relacionais
-        bool operator ==(veiculo a);
-        bool operator !=(veiculo a);
+        bool operator ==(veiculo v);
+        bool operator !=(veiculo v);
 
         //Sobrecarga do Operador de Atribuição
-        veiculo & operator =(const veiculo & a);
+        veiculo & operator =(const veiculo & v);
 
         //Sobrecarga de Operadores IO
-        friend istream & operator >>(istream & is, veiculo & a);
-        friend ostream & operator <<(ostream & os, veiculo & a);
+        friend istream & operator >>(istream & is, veiculo & v);
+        friend ostream & operator <<(ostream & os, veiculo & v);
 };
 
 #endif    /* veiculos_H */

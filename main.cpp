@@ -7,14 +7,17 @@
 #include <string>
 
 //Bibliotecas novas
-#include "./veiculos.h"
 #include "./concessionarias.h"
+#include "./veiculos.h"
+#include "./automoveis.h"
+#include "./caminhoes.h"
+#include "./motos.h"
 
 //Classe implícita
 using namespace std;
 
 //inicialização dos atributos estáticos das classes
-int veiculo::total = 0, concessionaria::total = 0;
+int moto::total = 0, caminhao::total = 0, automovel::total = 0, veiculo::total = 0, concessionaria::total = 0;
 
 //Program
 int main(int argc, char* argv[])
@@ -34,36 +37,33 @@ int main(int argc, char* argv[])
 	cout << endl << "...Produção trimestral da(s) concessionária(s)..." << endl << endl;
 	list<veiculo> ptotal1 = c1.getProducao_trimestre();
 	cout << "├── Concessionária " << c1.getNome() << " produziu " << ptotal1.size() << " veículo(s) no último trimestre." << endl;
-    for(list<veiculo>::iterator i = ptotal1.begin() ; i != ptotal1.end() ; i++)
-    {   
-        cout << *i << endl;  
-    }
-    if(ptotal1.size() == 0)
-    {
-        cout << "├─── Nenhum veículo produzido no último trimestre" << endl;
-    }	
+    for(list<veiculo>::iterator i = ptotal1.begin() ; i != ptotal1.end() ; i++) cout << *i << endl;
+    if(ptotal1.size() == 0) cout << "├─── Nenhum veículo produzido no último trimestre" << endl;	
 
 	//Ajuste nos preços dos veículos de uma concessionária
-	cout << "...Aplicando o incremento de 50% na alíquota do preço dos veículos de uma concessionária..." << endl;
+	cout << endl << "...Aplicando o incremento de 50% na alíquota do preço dos veículos de uma concessionária..." << endl;
 	c1.increase_tax_rate(50);
 	cout << endl << c1 ;
 
-	//Total de veículos
-	int atotal = veiculo::getTotal();
-	//Total de concessionárias
-	int ctotal = concessionaria::getTotal();
-    //Média de veículos por concessionárias
-	float amedia = float(atotal)/float(ctotal);
-	//Produção trimestral total da(s) concessionária(s)
-	int ptotal = ptotal1.size();
+	//Operações da(s) concessionária(s)
+	int ctotal   = concessionaria::getTotal();        //Total de concessionárias
+	int vtotal   = veiculo::getTotal();               //Total de veículos
+	int vatotal  = automovel::getTotal();             //Total de caminhões
+	int vactotal = caminhao::getTotal();              //Total de caminhões
+	int vamtotal = moto::getTotal();                  //Total de motos
+	float amedia = float(vtotal)/float(ctotal);       //Média de veículos por concessionárias
+	int ptotal   = ptotal1.size();                    //Produção trimestral total da(s) concessionária(s)
 
-    //Apresentação do balanço das operações das concessionárias 
+    //Apresentação das operações da(s) concessionária(s) 
     cout << endl << "...Apresentação do balanço das operações da(s) concessionária(s)..." << endl << endl;    
     cout << "Balanço             " << endl;
-    cout << " Média              " << amedia << endl;
-    cout << " Veículo(s)         " << atotal << endl;
-    cout << " Concessionária(s)  " << ctotal << endl;
-    cout << " Produção Trimestre " << ptotal << endl;
+    cout << " Concessionária(s)  " << ctotal   << endl;
+    cout << " Média da Produção  " << amedia   << endl;
+    cout << " Produção Trimestre " << ptotal   << endl;
+    cout << " Veículo(s)         " << vtotal   << endl;
+    cout << "  Automóvel(is)     " << vatotal  << endl;
+    cout << "   Caminhão(ões)    " << vactotal << endl;
+    cout << "   Moto(s)          " << vamtotal << endl;
     cout << endl;
 
 	return 0;
