@@ -1,6 +1,6 @@
 
 #Makefile for "concessionarias" C++ application
-#Created by r4m0nl1m4 09/09/2019
+#Created by r4m0nl1m4 29/10/2019
 
 #executável
 PROG = concessionarias								
@@ -31,7 +31,7 @@ main.o:
 concessionarias.o : concessionarias.h
 	$(CC) $(CPPFLAGS) -c concessionarias.cpp
 
-veiculos.o : veiculos.h 
+veiculos.o : estoque.h veiculos.h 
 	$(CC) $(CPPFLAGS) -c veiculos.cpp
 
 automoveis.o : automoveis.h

@@ -1,6 +1,6 @@
 
 //Body for "concessionarias" C++ application
-//Created by r4m0nl1m4 09/09/2019
+//Created by r4m0nl1m4 29/10/2019
 
 //Cabeçalho
 #include "./concessionarias.h"
@@ -11,7 +11,7 @@ concessionaria::concessionaria(string _nome, string _cnpj, e _est)
 {
     nome = _nome;
     cnpj = _cnpj;
-    estoque = _est;
+    stock = _est;
     naut = _est.caminhoes.size() + _est.motos.size();
     total++;
 }
@@ -63,7 +63,7 @@ string concessionaria::getCNPJ()
 
 void concessionaria::setEstoque(e setEstoque)
 {
-    estoque = setEstoque;
+    stock = setEstoque;
 }
 
 //e concessionaria::getEstoque()
@@ -73,11 +73,20 @@ void concessionaria::setEstoque(e setEstoque)
 
 int concessionaria::getProducao_trimestre()
 {
-    int proT = estoque.caminhoes.size() + estoque.motos.size();
+    //Quantidade de veículos produzidos
+    int proT = stock.caminhoes.size() + stock.motos.size();    
+    //Apresentação dos dados
     cout << "├── Concessionária " << nome << " produziu " << proT << " veículo(s) no último trimestre." << endl;
-    estoque.print(estoque.getProducao_trimestal(estoque.caminhoes));
-    estoque.print(estoque.getProducao_trimestal(estoque.motos));
-    if(proT == 0) cout << "├─── Nenhum veículo produzido no último trimestre" << endl;
+    //Caso não tenha produzição trimestral
+    if(proT == 0) 
+        cout << "├─── Nenhum veículo produzido no último trimestre" << endl;
+    else
+    {
+        //Produção trimestral de caminhões
+        stock.caminhoes.print_producao_trimestal();
+        //Produção trimestral de motos
+        stock.motos.print_producao_trimestal();
+    }
     return proT;
 }
 
@@ -98,9 +107,9 @@ void concessionaria::add_veiculo()
         {//As chaves criam um bloco e um escopo, para poder criar as variáveis.
             caminhao novoCaminhao;
             cin >> novoCaminhao;
-            if(!estoque.checkIn(estoque.caminhoes, novoCaminhao))
+            if(!stock.caminhoes.checkIn(novoCaminhao))
             {
-                estoque.caminhoes.push_back(novoCaminhao);
+                stock.caminhoes.push(novoCaminhao);
                 naut++;
             }           
             break;
@@ -109,9 +118,9 @@ void concessionaria::add_veiculo()
         {
             moto novaMoto;
             cin >> novaMoto;
-            if(!estoque.checkIn(estoque.motos, novaMoto))
+            if(!stock.motos.checkIn(novaMoto))
             {
-                estoque.motos.push_back(novaMoto);
+                stock.motos.push(novaMoto);
                 naut++;
             }
             break;
@@ -127,8 +136,8 @@ void concessionaria::add_veiculo()
 
 void concessionaria::increase_tax_rate(float n)
 {
-    estoque.increase_tax_rate(estoque.caminhoes, n);
-    estoque.increase_tax_rate(estoque.motos, n);
+    stock.caminhoes.increase_tax_rate(n);
+    stock.motos.increase_tax_rate(n);
 }
 
 //Sobrecarga de Operadores Relacionais
@@ -151,8 +160,8 @@ concessionaria & concessionaria::operator =(const concessionaria & c)
     {
         nome = c.nome;
         cnpj = c.cnpj;
-        estoque.caminhoes = c.estoque.caminhoes;
-        estoque.motos = c.estoque.motos;
+        stock.caminhoes = c.stock.caminhoes;
+        stock.motos = c.stock.motos;
     }
     return *this;
 }
@@ -201,8 +210,8 @@ ostream & operator <<(ostream & os, concessionaria & c)
     cout << "├─── Naut " << c.naut                    << endl;
     cout << "├─── ProT " << c.getProducao_trimestre() << endl;
 
-    c.estoque.print(c.estoque.caminhoes);
-    c.estoque.print(c.estoque.motos);
+    c.stock.caminhoes.print();
+    c.stock.motos.print();
 
     return os;
 }
