@@ -14,7 +14,7 @@ CPPFLAGS = -O0       \
            -Wall     \
            -ansi     \
            -pedantic \
-           -DIR
+           -DIR      
 #diretivas para o ligador (linker)
 LDFLAGS = -DIR
 #arquivos objetos definidos como pré-requisito

@@ -78,18 +78,18 @@ caminhao & caminhao::operator =(const caminhao & c)
 istream & operator >>(istream & is, caminhao & c)
 {
     cout << "   Veículo" << endl;
-    cout << "    Digite o chass: ";
+    cout << "   ├Digite o chass: ";
     cin >> c.chass;
 
     struct tm data = {0};
     int y = 0, m = 0, d = 0; 
 
-    cout << "    Digite a dataF: " << endl;
-    cout << "     Digite o dia [ 1-31 ]: ";
+    cout << "   ├Digite a dataF: " << endl;
+    cout << "   ├─Digite o dia [ 1-31 ]: ";
     cin >> d;
-    cout << "     Digite o mes [ 1-12 ]: ";
+    cout << "   ├─Digite o mes [ 1-12 ]: ";
     cin >> m;
-    cout << "     Digite o ano [ 1900-]: ";
+    cout << "   ├─Digite o ano [ 1900-]: ";
     cin >> y;
 
     data.tm_mday = d;
@@ -98,19 +98,19 @@ istream & operator >>(istream & is, caminhao & c)
 
     c.dataF = mktime(&data);
 
-    cout << "    Digite a marca: ";
+    cout << "   ├Digite a marca: ";
     cin.ignore(sizeof(is),'\n');
     getline(cin, c.marca);
-    cout << "    Digite o preço: ";
+    cout << "   ├Digite o preço: ";
     cin >> c.preco;
 
-    cout << "    Automóvel" << endl;
-    cout << "     Digite o motor: ";
+    cout << "   ├Automóvel" << endl;
+    cout << "   ├─Digite o motor: ";
     cin.ignore(sizeof(is),'\n');
     getline(cin, c.motor);
 
-    cout << "     Caminhão" << endl;
-    cout << "      Digite a carga: ";
+    cout << "   ├─Caminhão" << endl;
+    cout << "   ├──Digite a carga: ";
     getline(cin, c.carga);
 
     cout << "   Caminhão cadastrado!" << endl;

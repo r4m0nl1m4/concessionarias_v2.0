@@ -155,9 +155,9 @@ istream & operator >>(istream & is, veiculo & v)
 
 ostream & operator <<(ostream & os, veiculo & v)
 {
-    cout << "├─── Veículo"                                           << endl;
+    cout << "├─── Veículo "                                          << endl;
     cout << "├──── Chass "    << fixed << setprecision(0) << v.chass << endl;
-    cout << "├──── Data  "    << ctime(&v.dataF);
+    cout << "├──── Data "     << ctime(&v.dataF);
     cout << "├──── Marca "    << v.marca                             << endl;
     cout << "├──── Preço R$ " << fixed << setprecision(2) << v.preco;    
 

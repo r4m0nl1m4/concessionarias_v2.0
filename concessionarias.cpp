@@ -7,14 +7,12 @@
 
 //Construtores
 
-concessionaria::concessionaria(string _nome, string _cnpj, list<veiculo> _estoque, list<caminhao> _estoqueCaminhoes, list<moto> _estoqueMotos)
+concessionaria::concessionaria(string _nome, string _cnpj, e _est)
 {
     nome = _nome;
     cnpj = _cnpj;
-    estoque = _estoque;
-    estoqueCaminhoes = _estoqueCaminhoes;
-    estoqueMotos = _estoqueMotos;
-    naut = _estoque.size() + _estoqueCaminhoes.size() + _estoqueMotos.size();
+    estoque = _est;
+    naut = _est.caminhoes.size() + _est.motos.size();
     total++;
 }
 
@@ -63,78 +61,24 @@ string concessionaria::getCNPJ()
     return cnpj;
 }
 
-void concessionaria::setEstoque(list<veiculo> setEstoque)
+void concessionaria::setEstoque(e setEstoque)
 {
     estoque = setEstoque;
 }
 
-list<veiculo> concessionaria::getEstoque()
+//e concessionaria::getEstoque()
+//{
+//    return estoque;
+//}
+
+int concessionaria::getProducao_trimestre()
 {
-    return estoque;
-}
-
-void concessionaria::setEstoqueCaminhoes(list<caminhao> setEstoqueCaminhoes)
-{
-    estoqueCaminhoes = setEstoqueCaminhoes;
-}
-
-list<caminhao> concessionaria::getEstoqueCaminhoes()
-{
-    return estoqueCaminhoes;
-}
-
-void concessionaria::setEstoqueMotos(list<moto> setEstoqueMotos)
-{
-    estoqueMotos = setEstoqueMotos;
-}
-
-list<moto> concessionaria::getEstoqueMotos()
-{
-    return estoqueMotos;
-}
-
-list<veiculo> concessionaria::getProducao_trimestre()
-{
-    double idade = 0, trimestre = 3*30*24*60*60;
-    list<veiculo> proT;
-    time_t now, dataF;
-
-    //Acesso ao estoque de veículos
-    for(list<veiculo>::iterator i = estoque.begin() ; i != estoque.end() ; i++)
-    {   
-        //Data atual
-        now = time(NULL);
-        //Data de fabricação
-        dataF = (*i).getDataF();
-        //Idade da produção em segundos
-        idade = difftime(now, dataF);
-        if(idade <= trimestre)
-        {
-            proT.push_back(*i);
-        }    
-    }
-
+    int proT = estoque.caminhoes.size() + estoque.motos.size();
+    cout << "├── Concessionária " << nome << " produziu " << proT << " veículo(s) no último trimestre." << endl;
+    estoque.print(estoque.getProducao_trimestal(estoque.caminhoes));
+    estoque.print(estoque.getProducao_trimestal(estoque.motos));
+    if(proT == 0) cout << "├─── Nenhum veículo produzido no último trimestre" << endl;
     return proT;
-}
-
-//Veículo já consta no estoque?
-template <typename T, typename U>
-bool concessionaria::checkEstoque(T begin, T end, U element)
-{
-    //Acesso ao estoque de veículos
-    while(begin != end)
-    {
-        //Lógica operacional para a aferição de igualdade
-        if((*begin) == element)
-        {
-            cout << endl << "ERROR! Veículo já adicionado" << endl;
-            (*begin).total--;
-            //Sai da iteração
-            return true;
-        }
-        ++begin;
-    }
-    return false;
 }
 
 //Adiciona um veículo ao estoque
@@ -142,10 +86,10 @@ void concessionaria::add_veiculo()
 {
     int codigo;
     cout << "  Veículos:                   "  << endl;
-    cout << "   Automóveis:                "  << endl;
-    cout << "    [1] Caminhão              "  << endl;
-    cout << "    [2] Moto                  "  << endl;
-    cout << "    [0] Sair                  "  << endl;
+    cout << "  ├Automóveis:                "  << endl;
+    cout << "  ├─[1] Caminhão              "  << endl;
+    cout << "  ├─[2] Moto                  "  << endl;
+    cout << "  ├─[0] Sair                  "  << endl;
     cout << "  Digite o código do veículo: ";
     cin >> codigo;
     switch(codigo)
@@ -154,10 +98,9 @@ void concessionaria::add_veiculo()
         {//As chaves criam um bloco e um escopo, para poder criar as variáveis.
             caminhao novoCaminhao;
             cin >> novoCaminhao;
-            if(!checkEstoque(estoqueCaminhoes.begin(), estoqueCaminhoes.end(), novoCaminhao))
+            if(!estoque.checkIn(estoque.caminhoes, novoCaminhao))
             {
-                estoque.push_back(novoCaminhao);
-                estoqueCaminhoes.push_back(novoCaminhao);
+                estoque.caminhoes.push_back(novoCaminhao);
                 naut++;
             }           
             break;
@@ -166,41 +109,26 @@ void concessionaria::add_veiculo()
         {
             moto novaMoto;
             cin >> novaMoto;
-            if(!checkEstoque(estoqueMotos.begin(), estoqueMotos.end(), novaMoto))
+            if(!estoque.checkIn(estoque.motos, novaMoto))
             {
-                estoque.push_back(novaMoto);
-                estoqueMotos.push_back(novaMoto);
+                estoque.motos.push_back(novaMoto);
                 naut++;
             }
             break;
         }
         case 0:
-            exit (EXIT_FAILURE);
+            exit(EXIT_FAILURE);
         default:
             cout << "  Código inválido!";
-            exit (EXIT_FAILURE);
+            exit(EXIT_FAILURE);
             break;
     }
 }
 
 void concessionaria::increase_tax_rate(float n)
 {
-    //Acesso ao estoque de veículos
-    for(list<veiculo>::iterator i = estoque.begin() ; i != estoque.end() ; i++)
-    {
-        (*i).setPreco( (*i).getPreco()*( 1+n/100 ) );
-    }
-
-    //Acesso ao estoque de caminhões
-    for(list<caminhao>::iterator i = estoqueCaminhoes.begin() ; i != estoqueCaminhoes.end() ; i++)
-    {
-        (*i).setPreco( (*i).getPreco()*( 1+n/100 ) );
-    }
-    //Acesso ao estoque de motos
-    for(list<moto>::iterator i = estoqueMotos.begin() ; i != estoqueMotos.end() ; i++)
-    {
-        (*i).setPreco( (*i).getPreco()*( 1+n/100 ) );
-    }
+    estoque.increase_tax_rate(estoque.caminhoes, n);
+    estoque.increase_tax_rate(estoque.motos, n);
 }
 
 //Sobrecarga de Operadores Relacionais
@@ -223,9 +151,8 @@ concessionaria & concessionaria::operator =(const concessionaria & c)
     {
         nome = c.nome;
         cnpj = c.cnpj;
-        estoque = c.estoque;
-        estoqueCaminhoes = c.estoqueCaminhoes;
-        estoqueMotos = c.estoqueMotos;
+        estoque.caminhoes = c.estoque.caminhoes;
+        estoque.motos = c.estoque.motos;
     }
     return *this;
 }
@@ -268,28 +195,14 @@ istream & operator >>(istream & is, concessionaria & c)
 
 ostream & operator <<(ostream & os, concessionaria & c)
 {
-    cout << "├── Concessionária"                               << endl;
-    cout << "├─── Nome " << c.nome                             << endl;
-    cout << "├─── CNPJ " << c.cnpj                             << endl;
-    cout << "├─── Naut " << c.naut                             << endl;
-    cout << "├─── ProT " << (c.getProducao_trimestre()).size() << endl;
+    cout << "├── Concessionária"                      << endl;
+    cout << "├─── Nome " << c.nome                    << endl;
+    cout << "├─── CNPJ " << c.cnpj                    << endl;
+    cout << "├─── Naut " << c.naut                    << endl;
+    cout << "├─── ProT " << c.getProducao_trimestre() << endl;
 
-    //Acesso ao estoque de veículos
-    //for(list<veiculo>::iterator i = c.estoque.begin() ; i != c.estoque.end() ; i++)
-    //{
-    //    cout << *i << endl;    
-    //}
-
-    //Acesso ao estoque de caminhões
-    for(list<caminhao>::iterator i = c.estoqueCaminhoes.begin() ; i != c.estoqueCaminhoes.end() ; i++)
-    {
-        cout << *i << endl;    
-    }
-    //Acesso ao estoque de motos
-    for(list<moto>::iterator i = c.estoqueMotos.begin() ; i != c.estoqueMotos.end() ; i++)
-    {
-        cout << *i << endl;    
-    }
+    c.estoque.print(c.estoque.caminhoes);
+    c.estoque.print(c.estoque.motos);
 
     return os;
 }

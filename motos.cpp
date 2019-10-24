@@ -78,18 +78,18 @@ moto & moto::operator =(const moto & m)
 istream & operator >>(istream & is, moto & m)
 {
     cout << "   Veículo" << endl;
-    cout << "    Digite o chass: ";
+    cout << "   ├Digite o chass: ";
     cin >> m.chass;
 
     struct tm data = {0};
     int y = 0, mon = 0, d = 0; 
 
-    cout << "    Digite a dataF: " << endl;
-    cout << "     Digite o dia [ 1-31 ]: ";
+    cout << "   ├Digite a dataF: " << endl;
+    cout << "   ├─Digite o dia [ 1-31 ]: ";
     cin >> d;
-    cout << "     Digite o mes [ 1-12 ]: ";
+    cout << "   ├─Digite o mes [ 1-12 ]: ";
     cin >> mon;
-    cout << "     Digite o ano [ 1900-]: ";
+    cout << "   ├─Digite o ano [ 1900-]: ";
     cin >> y;
 
     data.tm_mday = d;
@@ -98,19 +98,19 @@ istream & operator >>(istream & is, moto & m)
 
     m.dataF = mktime(&data);
 
-    cout << "    Digite a marca: ";
+    cout << "   ├Digite a marca: ";
     cin.ignore(sizeof(is),'\n');
     getline(cin, m.marca);
-    cout << "    Digite o preço: ";
+    cout << "   ├Digite o preço: ";
     cin >> m.preco;
 
-    cout << "    Automóvel" << endl;
-    cout << "     Digite o motor: ";
+    cout << "   ├Automóvel" << endl;
+    cout << "   ├─Digite o motor: ";
     cin.ignore(sizeof(is),'\n');
     getline(cin, m.motor);
 
-    cout << "     Moto" << endl;
-    cout << "      Digite o modelo: ";
+    cout << "   ├─Moto" << endl;
+    cout << "   ├──Digite o modelo: ";
     getline(cin, m.modelo);
     
     cout << "   Moto cadastrada!" << endl;
@@ -120,15 +120,15 @@ istream & operator >>(istream & is, moto & m)
 
 ostream & operator <<(ostream & os, moto & m)
 {
-    cout << "├─── Veículo"                                               << endl;
-    cout << "├──── Chass "        << fixed << setprecision(0) << m.chass << endl;
-    cout << "├──── Data  "        << ctime(&m.dataF);
-    cout << "├──── Marca "        << m.marca                             << endl;
-    cout << "├──── Preço R$ "     << fixed << setprecision(2) << m.preco << endl;    
-    cout << "├──── Automóvel"                                            << endl;
-    cout << "├───── Motor "       << m.motor                             << endl;
-    cout << "├───── Moto"                                                << endl;
-    cout << "├────── Modelo "     << m.modelo;
+    cout << "├─── Veículo "                                           << endl;
+    cout << "├──── Chass "     << fixed << setprecision(0) << m.chass << endl;
+    cout << "├──── Data "      << ctime(&m.dataF);
+    cout << "├──── Marca "     << m.marca                             << endl;
+    cout << "├──── Preço R$ "  << fixed << setprecision(2) << m.preco << endl;    
+    cout << "├──── Automóvel "                                        << endl;
+    cout << "├───── Motor "    << m.motor                             << endl;
+    cout << "├───── Moto "                                            << endl;
+    cout << "├────── Modelo "  << m.modelo;
 
     return os;
 }

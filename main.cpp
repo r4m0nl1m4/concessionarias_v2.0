@@ -35,24 +35,21 @@ int main(int argc, char* argv[])
 
 	//Produção trimestral da(s) concessionária(s)
 	cout << endl << "...Produção trimestral da(s) concessionária(s)..." << endl << endl;
-	list<veiculo> ptotal1 = c1.getProducao_trimestre();
-	cout << "├── Concessionária " << c1.getNome() << " produziu " << ptotal1.size() << " veículo(s) no último trimestre." << endl;
-    for(list<veiculo>::iterator i = ptotal1.begin() ; i != ptotal1.end() ; i++) cout << *i << endl;
-    if(ptotal1.size() == 0) cout << "├─── Nenhum veículo produzido no último trimestre" << endl;	
+	int ptotal1 = c1.getProducao_trimestre();
 
 	//Ajuste nos preços dos veículos de uma concessionária
 	cout << endl << "...Aplicando o incremento de 50% na alíquota do preço dos veículos de uma concessionária..." << endl;
 	c1.increase_tax_rate(50);
-	cout << endl << c1 ;
+	cout << endl << c1;
 
 	//Operações da(s) concessionária(s)
-	int ctotal   = concessionaria::getTotal();        //Total de concessionárias
-	int vtotal   = veiculo::getTotal();               //Total de veículos
-	int vatotal  = automovel::getTotal();             //Total de caminhões
-	int vactotal = caminhao::getTotal();              //Total de caminhões
-	int vamtotal = moto::getTotal();                  //Total de motos
-	float amedia = float(vtotal)/float(ctotal);       //Média de veículos por concessionárias
-	int ptotal   = ptotal1.size();                    //Produção trimestral total da(s) concessionária(s)
+	int ctotal   = concessionaria::getTotal();  //Total de concessionárias
+	int vtotal   = veiculo::getTotal();         //Total de veículos
+	int vatotal  = automovel::getTotal();       //Total de caminhões
+	int vactotal = caminhao::getTotal();        //Total de caminhões
+	int vamtotal = moto::getTotal();            //Total de motos
+	float amedia = float(vtotal)/float(ctotal); //Média de veículos por concessionárias
+	int ptotal   = ptotal1;                     //Produção trimestral total da(s) concessionária(s)
 
     //Apresentação das operações da(s) concessionária(s) 
     cout << endl << "...Apresentação do balanço das operações da(s) concessionária(s)..." << endl << endl;    

@@ -113,13 +113,13 @@ istream & operator >>(istream & is, automovel & a)
 
 ostream & operator <<(ostream & os, automovel & a)
 {
-    cout << "├─── Veículo"                                           << endl;
-    cout << "├──── Chass "    << fixed << setprecision(0) << a.chass << endl;
-    cout << "├──── Data  "    << ctime(&a.dataF);
-    cout << "├──── Marca "    << a.marca                             << endl;
-    cout << "├──── Preço R$ " << fixed << setprecision(2) << a.preco << endl;    
-    cout << "├──── Automóvel"                                        << endl;
-    cout << "├───── Motor "   << a.motor;
+    cout << "├─── Veículo "                                           << endl;
+    cout << "├──── Chass "     << fixed << setprecision(0) << a.chass << endl;
+    cout << "├──── Data "      << ctime(&a.dataF);
+    cout << "├──── Marca "     << a.marca                             << endl;
+    cout << "├──── Preço R$ "  << fixed << setprecision(2) << a.preco << endl;    
+    cout << "├──── Automóvel "                                        << endl;
+    cout << "├───── Motor "    << a.motor;
 
     return os;
 }
