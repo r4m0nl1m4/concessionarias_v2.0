@@ -28,7 +28,7 @@ automovel::automovel()
 
 automovel::~automovel() {}
 
-//Métodos
+//Inserção e obtenção
 
 int automovel::getTotal()
 {
@@ -43,6 +43,30 @@ void automovel::setMotor(string setMotor)
 string automovel::getMotor()
 {
     return motor;
+}
+
+//Arquivo
+
+void automovel::writeDataInFile(ofstream& file)
+{
+    bool status;                                                                 //Status do arquivo                    
+    status = !( file.fail() || !file.is_open() || !file.good() );                //Abre um arquivo para escrita usando o ofstream 
+    if(!status)                                                                  //Deu ruim!
+    {
+        cout << "Arquivo não pode ser aberto para escrita.\n"; 
+        cout << "Programa terminando...\n";
+        exit(EXIT_FAILURE);
+    }
+    else                                                                         //De boas...
+    {
+        file << "├─── Veículo "                                         << endl;
+        file << "├──── Chass "     << fixed << setprecision(0) << chass << endl;
+        file << "├──── Data "      << ctime(&dataF);
+        file << "├──── Marca "     << marca                             << endl;
+        file << "├──── Preço R$ "  << fixed << setprecision(2) << preco << endl;    
+        file << "├──── Automóvel "                                      << endl;
+        file << "├───── Motor "    << motor;
+    }
 }
 
 //Sobrecarga de Operadores Relacionais

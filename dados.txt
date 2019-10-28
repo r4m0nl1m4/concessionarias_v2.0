@@ -1,0 +1,38 @@
+
+    Dados da concessionária:
+     Proprietários:2
+      1  Nome/razão social:Manolo One
+         CPF/CNPJ:123.456.789-01
+      2  Nome/razão social:Manolo Two
+         CPF/CNPJ:123.456.789-02
+     Jurídico               
+      Razão social:Manolo's Cars LTDA
+      CNPJ:12.345.789/000-1
+     Estoque                
+      Total:2
+      Caminhões:1
+      Motos:1
+      Produção Trimestral:2
+      Detalhamento dos veículos cadastrados:
+
+       Caminhão
+        Veículo
+        ├Chass:56789
+        ├Data:Sun Sep  1 00:00:00 2019
+        ├Marca:Truck
+        ├Preço [R$]:150000.00
+        ├Automóvel
+        ├─Motor:Gasolina
+        ├──Caminhão
+        ├───Carga:Perigosa
+
+       Moto
+        Veículo
+        ├Chass:98765
+        ├Data:Tue Oct 29 00:00:00 2019
+        ├Marca:Motocycle
+        ├Preço [R$]:15000.00
+        ├Automóvel
+        ├─Motor:Elétrico
+        ├──Moto
+        ├───Modelo:Esportiva

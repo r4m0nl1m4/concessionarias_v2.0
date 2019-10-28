@@ -37,7 +37,7 @@ veiculo::veiculo()
 
 veiculo::~veiculo() {}
 
-//Métodos
+//Inserção e obtemção
 
 int veiculo::getTotal()
 {
@@ -84,13 +84,50 @@ time_t veiculo::getDataF()
     return dataF;
 }
 
-void veiculo::showDados()
+//Arquivo
+void veiculo::readDataOnFile(istream & file)  
 {
-    cout << "├─── Veículo"                                         << endl;
-    cout << "├──── Chass "    << fixed << setprecision(0) << chass << endl;
-    cout << "├──── Data  "    << ctime(&dataF);
-    cout << "├──── Marca "    << marca                             << endl;
-    cout << "├──── Preço R$ " << fixed << setprecision(2) << preco << endl;    
+    //Ler chass
+    string _chass;
+    file.ignore(256, ':');                        //ignore until ':'
+    getline(file, _chass);
+    chass = atof(_chass.c_str());
+    //Ler data
+    string _data;
+    //time_t _d;
+    file.ignore(256, ':');                        //ignore until ':'
+    getline(file, _data);
+    //(stock.caminhoes.newest()).setDataf(101);
+    //Ler marca
+    string _marca;
+    file.ignore(256, ':');                        //ignore until ':'
+    getline(file, _marca);
+    marca = _marca;
+    //Ler preco
+    string _preco;
+    file.ignore(256, ':');                        //ignore until ':'
+    getline(file, _preco);
+    preco = atof(_preco.c_str());
+}
+
+void veiculo::writeDataInFile(ofstream& file)
+{
+    bool status;                                                                //Status do arquivo                    
+    status = !( file.fail() || !file.is_open() || !file.good() );               //Abre um arquivo para escrita usando o ofstream 
+    if(!status)                                                                 //Deu ruim!
+    {
+        cout << "Arquivo não pode ser aberto para escrita.\n"; 
+        cout << "Programa terminando...\n";
+        exit(EXIT_FAILURE);
+    }
+    else                                                                        //De boas...
+    {
+        file << "├─── Veículo "                                        << endl;
+        file << "├──── Chass "    << fixed << setprecision(0) << chass << endl;
+        file << "├──── Data "     << ctime(&dataF);
+        file << "├──── Marca "    << marca                             << endl; 
+        file << "├──── Preço R$ " << fixed << setprecision(2) << preco; 
+    }
 }
 
 //Sobrecarga de Operadores Relacionais
